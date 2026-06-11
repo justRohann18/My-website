@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday, Avishka! 💖</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0d0014;
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ── Stars ── */
+    #stars-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── Floating hearts ── */
+    .hearts-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .heart {
+      position: absolute;
+      bottom: -60px;
+      font-size: 1.4rem;
+      opacity: 0;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.8; }
+      100% { transform: translateY(-110vh) scale(0.4) rotate(30deg); opacity: 0; }
+    }
+
+    /* ── Sections ── */
+    section {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+    }
+
+    /* ── Hero ── */
+    #hero {
+      background: radial-gradient(ellipse at center, #3a005c 0%, #0d0014 70%);
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff6fc8, #ff3fa4);
+      color: #fff;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+      box-shadow: 0 0 20px #ff3fa466;
+    }
+    .hero-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(3rem, 10vw, 7rem);
+      background: linear-gradient(135deg, #ff9de2, #ff3fa4, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      text-shadow: none;
+      filter: drop-shadow(0 0 18px #ff3fa480);
+    }
+    .hero-name {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 7vw, 5rem);
+      color: #ffd6f0;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 1rem;
+      color: #d4a8e8;
+      letter-spacing: 1px;
+      margin-bottom: 40px;
+    }
+    .scroll-hint {
+      margin-top: 20px;
+      font-size: 1.5rem;
+      animation: bounce 1.5s infinite;
+      color: #ff9de2;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(10px); }
+    }
+
+    /* ── Cake counter ── */
+    .cake-wrap {
+      margin: 30px 0;
+      position: relative;
+      display: inline-block;
+    }
+    .cake-emoji {
+      font-size: 7rem;
+      animation: pulse 2s ease-in-out infinite;
+      display: block;
+      filter: drop-shadow(0 0 24px #ff3fa4cc);
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.08); }
+    }
+    .candles {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+    .candle { font-size: 1.2rem; animation: flicker 0.8s ease-in-out infinite alternate; }
+    .candle:nth-child(2) { animation-delay: 0.2s; }
+    .candle:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes flicker {
+      from { opacity: 0.7; transform: scaleY(0.95); }
+      to   { opacity: 1;   transform: scaleY(1.05); }
+    }
+
+    /* ── Love counter ── */
+    #counter-section {
+      background: linear-gradient(135deg, #1a0030 0%, #2d0050 100%);
+      text-align: center;
+    }
+    .section-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: #ff9de2;
+      margin-bottom: 40px;
+      text-shadow: 0 0 20px #ff3fa460;
+    }
+    .counters {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .counter-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,105,180,0.3);
+      border-radius: 20px;
+      padding: 30px 28px;
+      min-width: 130px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(255,63,164,0.15);
+      transition: transform 0.3s;
+    }
+    .counter-card:hover { transform: translateY(-6px); }
+    .counter-num {
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
+      font-weight: 600;
+      background: linear-gradient(135deg, #ff9de2, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .counter-label {
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4a8e8;
+      margin-top: 6px;
+    }
+
+    /* ── Message ── */
+    #message-section {
+      background: radial-gradient(ellipse at bottom, #2d0050 0%, #0d0014 70%);
+      text-align: center;
+    }
+    .envelope {
+      font-size: 5rem;
+      margin-bottom: 24px;
+      animation: wobble 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 16px #ff3fa480);
+    }
+    @keyframes wobble {
+      0%,100% { transform: rotate(-4deg); }
+      50%      { transform: rotate(4deg); }
+    }
+    .message-card {
+      max-width: 640px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,105,180,0.25);
+      border-radius: 24px;
+      padding: 40px 36px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 12px 48px rgba(255,63,164,0.12), inset 0 0 40px rgba(255,63,164,0.03);
+      line-height: 1.9;
+      color: #f0d6ff;
+      font-size: 1.05rem;
+    }
+    .message-card p { margin-bottom: 14px; }
+    .message-card p:last-child { margin-bottom: 0; }
+    .signature {
+      margin-top: 22px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
+      color: #ff9de2;
+    }
+
+    /* ── Memory timeline ── */
+    #timeline-section {
+      background: linear-gradient(180deg, #0d0014 0%, #1a0030 100%);
+    }
+    .timeline {
+      max-width: 560px;
+      width: 100%;
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 28px;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, #ff3fa4, #c084fc, #ff3fa4);
+    }
+    .tl-item {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+      align-items: flex-start;
+    }
+    .tl-dot {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff3fa4, #c084fc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      box-shadow: 0 0 18px #ff3fa460;
+      z-index: 1;
+    }
+    .tl-content {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,105,180,0.2);
+      border-radius: 16px;
+      padding: 18px 22px;
+      flex: 1;
+    }
+    .tl-date {
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ff9de2;
+      margin-bottom: 6px;
+    }
+    .tl-text { color: #e0c8f8; line-height: 1.7; font-size: 0.95rem; }
+
+    /* ── Final wish ── */
+    #wish-section {
+      background: radial-gradient(ellipse at center, #3a005c 0%, #0d0014 80%);
+      text-align: center;
+    }
+    .wish-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      background: linear-gradient(135deg, #ffd6f0, #ff3fa4, #c084fc, #ffd6f0);
+      background-size: 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s linear infinite;
+      margin-bottom: 20px;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    .wish-text {
+      max-width: 500px;
+      color: #d4a8e8;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+    .love-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #ff3fa4, #c084fc);
+      color: #fff;
+      padding: 14px 36px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      box-shadow: 0 6px 30px rgba(255,63,164,0.45);
+      animation: glowPulse 2s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%,100% { box-shadow: 0 6px 30px rgba(255,63,164,0.45); }
+      50%      { box-shadow: 0 6px 50px rgba(255,63,164,0.8); }
+    }
+
+    /* ── Confetti ── */
+    #confetti-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ── Music note hint ── */
+    .music-btn {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      z-index: 100;
+      background: linear-gradient(135deg,#ff3fa4,#c084fc);
+      border: none; cursor: pointer;
+      border-radius: 50%;
+      width: 52px; height: 52px;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 20px rgba(255,63,164,0.5);
+      transition: transform 0.2s;
+    }
+    .music-btn:hover { transform: scale(1.12); }
+  </style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+<canvas id="confetti-canvas"></canvas>
+
+<!-- Floating hearts -->
+<div class="hearts-container" id="heartsContainer"></div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-badge">✨ A Special Day ✨</div>
+  <div class="hero-title">Happy Birthday</div>
+  <div class="hero-name">Avishka 🌸</div>
+  <p class="hero-sub">From Rohan, with all the love in the universe 💫</p>
+  <div class="cake-wrap">
+    <div class="candles">
+      <span class="candle">🕯️</span>
+      <span class="candle">🕯️</span>
+      <span class="candle">🕯️</span>
+    </div>
+    <span class="cake-emoji">🎂</span>
+  </div>
+  <div class="scroll-hint">↓</div>
+</section>
+
+<!-- LOVE COUNTER -->
+<section id="counter-section">
+  <h2 class="section-title">💖 Our Love in Numbers</h2>
+  <div class="counters">
+    <div class="counter-card">
+      <div class="counter-num" id="cnt-days">0</div>
+      <div class="counter-label">Days Together</div>
+    </div>
+    <div class="counter-card">
+      <div class="counter-num" id="cnt-hours">0</div>
+      <div class="counter-label">Hours of Us</div>
+    </div>
+    <div class="counter-card">
+      <div class="counter-num" id="cnt-minutes">0</div>
+      <div class="counter-label">Minutes of Love</div>
+    </div>
+    <div class="counter-card">
+      <div class="counter-num" id="cnt-seconds">0</div>
+      <div class="counter-label">Seconds & Counting</div>
+    </div>
+  </div>
+</section>
+
+<!-- MESSAGE -->
+<section id="message-section">
+  <div class="envelope">💌</div>
+  <h2 class="section-title">A Letter for You</h2>
+  <div class="message-card">
+    <p>My dearest Avishka,</p>
+    <p>On this beautiful day, I want you to know that every single moment with you feels like a gift I never knew I deserved. You light up every room, every conversation, and every corner of my heart.</p>
+    <p>Since the day we became us — <strong style="color:#ff9de2">May 4th, 2026</strong> — my world has been infinitely brighter. You are my favourite person, my safe place, and my greatest adventure.</p>
+    <p>Today is YOUR day. I hope it is filled with all the joy, laughter, and love you so generously pour into everyone around you — especially me.</p>
+    <p>Happy Birthday, my love. 🌸</p>
+    <div class="signature">Forever yours, Rohan 💕</div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline-section">
+  <h2 class="section-title" style="text-align:center; margin-bottom:50px">🌟 Our Story So Far</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot">🌱</div>
+      <div class="tl-content">
+        <div class="tl-date">May 4, 2026 — Day One</div>
+        <div class="tl-text">The day everything changed. Two hearts decided to walk together, and the universe smiled.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">🥰</div>
+      <div class="tl-content">
+        <div class="tl-date">Every day since</div>
+        <div class="tl-text">Laughs, late-night talks, inside jokes, and a thousand little moments that make this love the realest thing I know.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">🎂</div>
+      <div class="tl-content">
+        <div class="tl-date">Today — Your Birthday!</div>
+        <div class="tl-text">Our first birthday together as a couple. The first of many, many more celebrations filled with love and cake. 🎉</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">∞</div>
+      <div class="tl-content">
+        <div class="tl-date">Every tomorrow</div>
+        <div class="tl-text">Every adventure, every memory yet to be made — I want all of it, with you.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WISH -->
+<section id="wish-section">
+  <div class="wish-title">You Are Magic ✨</div>
+  <p class="wish-text">
+    May this year bring you everything you've ever dreamed of — and all the things you haven't even thought to wish for yet. You deserve every beautiful thing life has to offer, Avishka.
+  </p>
+  <div class="love-pill">💖 Rohan loves Avishka 💖</div>
+</section>
+
+<button class="music-btn" id="musicBtn" title="Play birthday music">🎵</button>
+
+<script>
+// ── Stars ──────────────────────────────────────────────────
+(function(){
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    stars = Array.from({length:180}, ()=>({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      r: Math.random()*1.6+0.3,
+      a: Math.random(),
+      s: (Math.random()-0.5)*0.008
+    }));
+  }
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    stars.forEach(s=>{
+      s.a += s.s;
+      if(s.a<=0||s.a>=1) s.s*=-1;
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle = `rgba(255,220,240,${s.a})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
+
+// ── Floating hearts ─────────────────────────────────────────
+(function(){
+  const container = document.getElementById('heartsContainer');
+  const emojis = ['💖','💕','💗','💓','💝','🌸','✨','💞'];
+  setInterval(()=>{
+    const h = document.createElement('span');
+    h.className = 'heart';
+    h.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    h.style.left = Math.random()*100+'vw';
+    h.style.fontSize = (Math.random()*1.2+0.8)+'rem';
+    const dur = Math.random()*8+7;
+    h.style.animationDuration = dur+'s';
+    h.style.animationDelay = '0s';
+    container.appendChild(h);
+    setTimeout(()=>h.remove(), dur*1000+200);
+  }, 600);
+})();
+
+// ── Love counter ─────────────────────────────────────────────
+(function(){
+  const start = new Date('2026-05-04T00:00:00');
+  function update(){
+    const now = new Date();
+    const diff = Math.max(0, now - start);
+    const days    = Math.floor(diff / 86400000);
+    const hours   = Math.floor(diff / 3600000);
+    const minutes = Math.floor(diff / 60000);
+    const seconds = Math.floor(diff / 1000);
+    document.getElementById('cnt-days').textContent    = days.toLocaleString();
+    document.getElementById('cnt-hours').textContent   = hours.toLocaleString();
+    document.getElementById('cnt-minutes').textContent = minutes.toLocaleString();
+    document.getElementById('cnt-seconds').textContent = seconds.toLocaleString();
+  }
+  update();
+  setInterval(update, 1000);
+})();
+
+// ── Confetti ─────────────────────────────────────────────────
+(function(){
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  window.addEventListener('resize', ()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+  const colors = ['#ff3fa4','#ff9de2','#c084fc','#ffd6f0','#f9a8d4','#e879f9','#fff'];
+  let pieces = [];
+
+  function spawn(){
+    for(let i=0;i<120;i++){
+      pieces.push({
+        x: Math.random()*canvas.width,
+        y: -10,
+        w: Math.random()*10+4,
+        h: Math.random()*5+3,
+        color: colors[Math.floor(Math.random()*colors.length)],
+        rot: Math.random()*360,
+        rSpeed: (Math.random()-0.5)*6,
+        vx: (Math.random()-0.5)*3,
+        vy: Math.random()*3+1.5,
+        life: 1
+      });
+    }
+  }
+
+  function loop(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      p.x += p.vx; p.y += p.vy; p.rot += p.rSpeed;
+      p.life -= 0.004;
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, p.life);
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+      ctx.restore();
+    });
+    pieces = pieces.filter(p=>p.life>0 && p.y<canvas.height+20);
+    requestAnimationFrame(loop);
+  }
+  loop();
+  spawn();
+  setTimeout(spawn, 2000);
+  setTimeout(spawn, 4000);
+})();
+
+// ── Music button (plays a simple beep melody via Web Audio) ──
+document.getElementById('musicBtn').addEventListener('click', function(){
+  const ctx = new (window.AudioContext||window.webkitAudioContext)();
+  const notes = [523,587,659,698,784,880,988,1047];
+  notes.forEach((freq, i)=>{
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = 'sine';
+    o.frequency.value = freq;
+    const t = ctx.currentTime + i*0.22;
+    g.gain.setValueAtTime(0.25, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t+0.45);
+    o.start(t); o.stop(t+0.45);
+  });
+  this.textContent = '🎶';
+  setTimeout(()=>this.textContent='🎵', 3000);
+});
+</script>
+</body>
+</html>
